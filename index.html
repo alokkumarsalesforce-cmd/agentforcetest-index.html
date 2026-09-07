@@ -3,251 +3,54 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Chat Application</title>
+  <title>Google Page</title>
   <style>
-    :root {
-      --primary-color: #2563eb;
-      --primary-hover: #1d4ed8;
-      --bg-color: #f8fafc;
-      --chat-bg: #ffffff;
-      --text-dark: #1e293b;
-      --text-muted: #64748b;
-      --sent-msg-bg: #2563eb;
-      --sent-msg-text: #ffffff;
-      --received-msg-bg: #f1f5f9;
-      --received-msg-text: #0f172a;
-      --border-color: #e2e8f0;
-    }
-
     * {
       box-sizing: border-box;
       margin: 0;
       padding: 0;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
     }
-
-    body {
-      background-color: var(--bg-color);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      min-height: 100vh;
-      padding: 16px;
-    }
-
-    .chat-container {
+    body, html {
       width: 100%;
-      max-width: 720px;
-      height: 85vh;
-      background: var(--chat-bg);
-      border-radius: 16px;
-      box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.01);
+      height: 100%;
+      font-family: Arial, sans-serif;
       display: flex;
       flex-direction: column;
-      overflow: hidden;
-      border: 1px solid var(--border-color);
+      background-color: #f8f9fa;
     }
-
-    /* Header */
-    .chat-header {
+    header {
       background-color: #ffffff;
-      color: var(--text-dark);
-      padding: 18px 24px;
-      font-weight: 600;
-      font-size: 1.1rem;
+      padding: 12px 24px;
+      border-bottom: 1px solid #dadce0;
       display: flex;
-      align-items: center;
       justify-content: space-between;
-      border-bottom: 1px solid var(--border-color);
-    }
-
-    .header-info {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-
-    .status-indicator {
-      width: 10px;
-      height: 10px;
-      background-color: #22c55e;
-      border-radius: 50%;
-      box-shadow: 0 0 0 2px rgba(34, 197, 94, 0.2);
-    }
-
-    .subtitle {
-      font-size: 0.8rem;
-      color: var(--text-muted);
-      font-weight: 400;
-    }
-
-    /* Messages Area */
-    .chat-messages {
-      flex: 1;
-      padding: 24px;
-      overflow-y: auto;
-      display: flex;
-      flex-direction: column;
-      gap: 16px;
-      background-color: #ffffff;
-    }
-
-    .message {
-      max-width: 75%;
-      padding: 12px 16px;
-      border-radius: 16px;
-      font-size: 0.95rem;
-      line-height: 1.5;
-      display: flex;
-      flex-direction: column;
-      word-wrap: break-word;
-      animation: fadeIn 0.2s ease-in-out;
-    }
-
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(4px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    .message.received {
-      align-self: flex-start;
-      background-color: var(--received-msg-bg);
-      color: var(--received-msg-text);
-      border-bottom-left-radius: 4px;
-    }
-
-    .message.sent {
-      align-self: flex-end;
-      background-color: var(--sent-msg-bg);
-      color: var(--sent-msg-text);
-      border-bottom-right-radius: 4px;
-    }
-
-    .message .timestamp {
-      font-size: 0.725rem;
-      margin-top: 6px;
-      opacity: 0.75;
-      align-self: flex-end;
-    }
-
-    /* Input Area */
-    .chat-input-area {
-      padding: 16px 20px;
-      background: #ffffff;
-      border-top: 1px solid var(--border-color);
-      display: flex;
-      gap: 12px;
       align-items: center;
     }
-
-    .chat-input-area input {
+    header h1 {
+      font-size: 1.1rem;
+      color: #202124;
+    }
+    header a {
+      color: #1a73e8;
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 0.9rem;
+    }
+    header a:hover {
+      text-decoration: underline;
+    }
+    iframe {
+      width: 100%;
       flex: 1;
-      padding: 14px 18px;
-      border: 1px solid var(--border-color);
-      border-radius: 28px;
-      outline: none;
-      font-size: 0.95rem;
-      background-color: var(--bg-color);
-      transition: all 0.2s ease;
-    }
-
-    .chat-input-area input:focus {
-      border-color: var(--primary-color);
-      background-color: #ffffff;
-      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
-    }
-
-    .chat-input-area button {
-      background-color: var(--primary-color);
-      color: #ffffff;
       border: none;
-      padding: 14px 24px;
-      border-radius: 28px;
-      font-weight: 600;
-      font-size: 0.95rem;
-      cursor: pointer;
-      transition: background-color 0.2s ease;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .chat-input-area button:hover {
-      background-color: var(--primary-hover);
     }
   </style>
 </head>
 <body>
-
-  <div class="chat-container">
-    <div class="chat-header">
-      <div class="header-info">
-        <div class="status-indicator"></div>
-        <div>
-          <div>Support Assistant</div>
-          <div class="subtitle">Online</div>
-        </div>
-      </div>
-    </div>
-
-    <div class="chat-messages" id="chatMessages">
-      <div class="message received">
-        <span>Hello! How can I help you today?</span>
-        <span class="timestamp">Just now</span>
-      </div>
-    </div>
-
-    <div class="chat-input-area">
-      <input type="text" id="messageInput" placeholder="Type your message..." autocomplete="off" />
-      <button id="sendBtn" onclick="sendMessage()">Send</button>
-    </div>
-  </div>
-
-  <script>
-    const chatMessages = document.getElementById("chatMessages");
-    const messageInput = document.getElementById("messageInput");
-
-    function getFormattedTime() {
-      const now = new Date();
-      return now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-    }
-
-    function appendMessage(text, sender) {
-      const messageDiv = document.createElement("div");
-      messageDiv.className = `message ${sender}`;
-
-      const textSpan = document.createElement("span");
-      textSpan.textContent = text;
-
-      const timeSpan = document.createElement("span");
-      timeSpan.className = "timestamp";
-      timeSpan.textContent = getFormattedTime();
-
-      messageDiv.appendChild(textSpan);
-      messageDiv.appendChild(timeSpan);
-
-      chatMessages.appendChild(messageDiv);
-      chatMessages.scrollTop = chatMessages.scrollHeight;
-    }
-
-    function sendMessage() {
-      const text = messageInput.value.trim();
-      if (!text) return;
-
-      appendMessage(text, "sent");
-      messageInput.value = "";
-
-      // Simulated automated response (Replace with real backend fetch/websocket call)
-      setTimeout(() => {
-        appendMessage("Thank you for reaching out! This is a simulated response.", "received");
-      }, 1000);
-    }
-
-    messageInput.addEventListener("keydown", (e) => {
-      if (e.key === "Enter") {
-        sendMessage();
-      }
-    });
-  </script>
+  <header>
+    <h1>Google Search View</h1>
+    <a href="https://www.google.com" target="_blank" rel="noopener noreferrer">Open Google.com ↗</a>
+  </header>
+  <iframe src="https://www.google.com/search?igu=1" title="Google Search"></iframe>
 </body>
 </html>
